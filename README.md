@@ -1,1 +1,18 @@
-# Platformer-hitbox-generation
+### Platformer-hitbox-generation
+Этот алгоритм я разрабатывал на БММ 2024 года в НГУ.
+Его идея заключается в том, что с помощью хитбоксов вокруг объектов мы обеспечиваем проходимость ``правда всё ещё у меня это не получилось``.
+У моего проекта есть возможность использования как и просто в виде библиотеки на C/C++ так и в динамической подключаемой библиотеке DLL. 
+К примеру подключать в Unity и использовать это там.
+
+__**Компиляции в виде библиотеке**__
+```
+clang -c platforms.c -o platforms.o
+clang -c main.c -o main.o
+clang platforms.o main.o -o maze_generator
+```
+
+__**Компиляция в DLL**__
+```
+ clang -c -o platforms.o platforms.c
+ clang -c -o platforms.o platforms.c
+```
