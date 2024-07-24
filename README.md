@@ -14,7 +14,7 @@ clang platforms.o main.o -o maze_generator
 __**Компиляция в DLL**__
 ```
  clang -c -o platforms.o platforms.c
- clang -c -o platforms.o platforms.c
+ clang -shared -v -o platforms.dll platforms.o
 ```
 
 ## Функции и переменные
