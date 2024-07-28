@@ -9,6 +9,7 @@
 
 // Объявление функций
 DLL_EXPORT void InitializeMaze(int height, int width, int numPaths);
+DLL_EXPORT void SetPlatformSpacing(int x_spacing, int y_spacing); // Объявление функции с параметрами отступов
 DLL_EXPORT void CreatePlatformN_Blocks(int n, int path);
 DLL_EXPORT void CreateLShapePlatform(int path);
 DLL_EXPORT void Create2x2Platform(int path);

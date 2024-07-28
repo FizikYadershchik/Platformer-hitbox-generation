@@ -10,10 +10,18 @@ int **mas = NULL;
 int **occupied = NULL; // Инициализация массива занятых областей
 int numPaths = 2;
 int *last_x, *last_y, *new_x, *new_y;
+int X_SPACING = 2;
+int Y_SPACING = 3;
 
 void SetRandomSeed(unsigned int seed)
 {
     srand(seed);
+}
+
+void SetPlatformSpacing(int x_spacing, int y_spacing)
+{
+    X_SPACING = x_spacing;
+    Y_SPACING = y_spacing;
 }
 
 void InitializeMaze(int height, int width, int numPathsInit)
@@ -119,7 +127,7 @@ void UpdateHitboxes()
 {
     for (int j = 0; j < HEIGHT; j++)
         for (int i = 0; i < WIDTH; i++)
-            if (mas[j][i] == 2)
+            if (mas[j][i] == 2) // Если это часть платформы
                 for (int dj = -1; dj <= 1; dj++)
                     for (int di = -1; di <= 1; di++)
                     {
@@ -144,7 +152,7 @@ void GeneratePlatform(int path)
         if (mas[i][last_x[path]] == 1)
             count++;
 
-    new_x[path] = last_x[path] + 2;
+    new_x[path] = last_x[path] + X_SPACING; // Применение отступа X
     int max_attempts = 10;
 
     for (int attempts = 0; attempts < max_attempts; attempts++)
@@ -154,12 +162,13 @@ void GeneratePlatform(int path)
 
         new_y[path] = last_y[path] + shift;
 
-        // Проверка, чтобы между хитбоксами разных путей было расстояние в одну пустую клетку
+        // Проверка на расстояние между хитбоксами платформ разных путей
         int is_valid = 1;
         for (int p = 0; p < numPaths; p++)
         {
             if (p != path)
             {
+                // Проверяем все клетки, покрытые хитбоксами
                 for (int dy = -1; dy <= 1; dy++)
                     for (int dx = -1; dx <= 1; dx++)
                     {
@@ -171,7 +180,8 @@ void GeneratePlatform(int path)
                             prev_x >= 0 && prev_x < WIDTH && prev_y >= 0 && prev_y < HEIGHT &&
                             occupied[prev_y][prev_x] == 1)
                         {
-                            if (abs(check_y - prev_y) <= 1)
+                            // Проверяем, что расстояние между хитбоксами по обоим направлениям достаточно
+                            if (abs(check_y - prev_y) <= Y_SPACING || abs(check_x - prev_x) <= X_SPACING)
                             {
                                 is_valid = 0;
                                 break;
